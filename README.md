@@ -40,3 +40,5 @@
 1. Your work will be evaluated **weekly**.
 2. Only commit once as the final submission will result in **0 points to the whole team (no exception/excuse will be accepted)**
 3. Be creative.
+
+WEEWOW WEEWOW HEHEEEHAHOHOHEEHAHOHA NYOOOOOOM
