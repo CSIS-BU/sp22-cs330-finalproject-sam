@@ -5,6 +5,7 @@
 
 import sys
 import socket
+import os
 
 RECV_BUFFER_SIZE = 2048
 QUEUE_LENGTH = 10
@@ -24,22 +25,25 @@ def server(server_port):
 
 def handlenewconnection(newsocket):
     gotted = []
-    while True:
-        getted = newsocket.recv(RECV_BUFFER_SIZE)
-        #if getted == b'':
-        #    raise RuntimeError("socket connection broken")
-        #el
-        if len(getted) == 0:
-            if len(gotted) == 0:
-                raise RuntimeError("socket connection broken")
+    if os.fork() > 0:
+        while True:
+            getted = newsocket.recv(RECV_BUFFER_SIZE)
+            #if getted == b'':
+            #    raise RuntimeError("socket connection broken")
+            #el
+            if len(getted) == 0:
+                if len(gotted) == 0:
+                    raise RuntimeError("socket connection broken")
+                else:
+                    s = ""
+                    for c in gotted:
+                        s += c
+                    print(s)
+                    if newsocket.send(bytes("hi", 'utf-8')) == 0:
+                        raise RuntimeError("socket connection done broke!")
+                    break
             else:
-                s = ""
-                for c in gotted:
-                    s += c
-                print(s)
-                break
-        else:
-            gotted.append(getted.decode('utf-8'))
+                gotted.append(getted.decode('utf-8'))
 
 def main():
     """Parse command-line argument and call server function """
