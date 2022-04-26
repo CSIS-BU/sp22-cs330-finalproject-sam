@@ -1,6 +1,7 @@
 import sys
 import socket
 import os
+import random
 
 RECV_BUFFER_SIZE = 2048
 QUEUE_LENGTH = 10
@@ -29,18 +30,39 @@ def server(server_port):
         handlenewconnection(newsocket)
     pass
 
-def handlenewconnection(newsocket):
-    gotted = ""
+def handlenewconnection(thesocket):
     if os.fork() > 0:
-        while True:
-            getted = getfrom(newsocket)
-            print(getted)
-            s = "hi"
-            if getted == "exit":
-                s = "bye"
-            sendto(newsocket, s)
-            if getted == "exit":
+        gotted = ""
+        letter = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'])
+        print(letter)
+        guesses = 1
+        winned = False
+        while True:    
+            gotted = getfrom(thesocket)
+            gotted = gotted.lower()
+            print(gotted)
+            if gotted == "exit":
+                sendto(thesocket, "Thanks for playing!")
                 break
+            elif gotted == "retry":
+                letter = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'])
+                print(letter)
+                guesses = 1
+                winned = False
+                sendto(thesocket, "Letter reset! Good luck!")
+            elif winned:
+                sendto(thesocket, "Type retry to retry, or exit to quit!")
+            elif len(gotted) != 1:
+                sendto(thesocket, "Limit guesses to one character!")
+            elif gotted[0] == letter:
+                winned = True
+                if guesses == 1:
+                    sendto(thesocket, "You guessed the correct letter in only one guess! Wow!\nType retry to retry, or exit to quit!")
+                else:
+                    sendto(thesocket, "You guessed the correct letter in " + str(guesses) + " guesses!\nType retry to retry, or exit to quit!!")
+            else:
+                sendto(thesocket, "Incorrect... Try again!")
+                guesses = guesses + 1
 
 def main():
     """Parse command-line argument and call server function """

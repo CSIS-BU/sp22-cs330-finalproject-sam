@@ -15,17 +15,21 @@ def sendto(thesocket, thetext):
     if thesocket.send(bytes(thetext, 'utf-8')) == 0:
         raise RuntimeError("socket connection done broke!")
 
+def managegame(thesocket):
+    while True:
+        gottentext = input("Guess the letter, or type exit to quit: ")
+        sendto(thesocket, gottentext)
+        getted = getfrom(thesocket)
+        print(getted)
+        if getted == "Thanks for playing!":
+            break
+        
+
 def client(server_ip, server_port):
     """TODO: Open socket and send message from sys.stdin"""
     thesocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     thesocket.connect((server_ip, server_port))
-    while True:
-        gottentext = input("Say something to the server: ")
-        sendto(thesocket, gottentext)
-        getted = getfrom(thesocket)
-        print(getted)
-        if getted == "bye":
-            break
+    managegame(thesocket)
     thesocket.close()
     pass
 
@@ -33,7 +37,7 @@ def client(server_ip, server_port):
 def main():
     """Parse command-line arguments and call client function """
     if len(sys.argv) != 3:
-        sys.exit("Usage: python3 clientreal.py [Server IP] [Server Port] < [message]")
+        sys.exit("Usage: python3 clientreal.py [Server IP] [Server Port]")
     server_ip = sys.argv[1]
     server_port = int(sys.argv[2])
     client(server_ip, server_port)
