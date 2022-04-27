@@ -1,0 +1,14 @@
+COMPILATION AND EXECUTION:
+The program requires a virtual machine running some version of unix to run. Open the command prompt in the folder, then type "vagrant up" to start the machine!
+Afterwards, try typing "vagrant ssh" to go to the machine in your command line. The folder should be hooked up, but if it isn't then you can try putting the program files in a different virtual machine.
+
+Once you are running the program, you may run the program directly from the command line. You may need to type the python command, or the python3 command.
+
+Server is run with a single extra argument: the port (ex. Python3 serverreal.py 7777)
+Client is run with two extra arguments: the ip adress and the port. this must correspond to an active server before running. (ex. python3 serverreal.py cs330 7777)
+
+to run both you will need two command line windows.
+
+PURPOSE:
+the program is a simple single player game of guess the letter. type in a single character to guess a letter and get feedback on how many guesses it took!
+you may type exit to cancel the client connection gracefully. the server can handle multiple clients simultaneously.

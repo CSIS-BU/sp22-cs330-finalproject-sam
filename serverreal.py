@@ -34,7 +34,7 @@ def handlenewconnection(thesocket):
     if os.fork() > 0:
         gotted = ""
         letter = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'])
-        print(letter)
+        #print(letter)
         guesses = 1
         winned = False
         while True:    
@@ -46,14 +46,14 @@ def handlenewconnection(thesocket):
                 break
             elif gotted == "retry":
                 letter = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'])
-                print(letter)
+                #print(letter)
                 guesses = 1
                 winned = False
                 sendto(thesocket, "Letter reset! Good luck!")
             elif winned:
                 sendto(thesocket, "Type retry to retry, or exit to quit!")
             elif len(gotted) != 1:
-                sendto(thesocket, "Limit guesses to one character!")
+                sendto(thesocket, "Make sure guesses are exactly one character long!")
             elif gotted[0] == letter:
                 winned = True
                 if guesses == 1:
