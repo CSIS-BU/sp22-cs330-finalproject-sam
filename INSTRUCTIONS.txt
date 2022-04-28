@@ -11,4 +11,4 @@ to run both you will need two command line windows.
 
 PURPOSE:
 the program is a simple single player game of guess the letter. type in a single character to guess a letter and get feedback on how many guesses it took!
-you may type exit to cancel the client connection gracefully. the server can handle multiple clients simultaneously.
+you may type "exit" to cancel the client connection gracefully. the server can handle multiple clients simultaneously.
